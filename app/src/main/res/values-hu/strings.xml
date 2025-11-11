@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ExpenseTracker</string>
+    <string name="add_an_expense">Kiadás felvétele</string>
+    <string name="dummy_price">0.00Ft</string>
+    <string name="add_text">Hozzáad</string>
+    <string name="app_title">Expense Tacker</string>
+    <string name="category_food">Étel</string>
+    <string name="category_shopping">Vásárlás</string>
+    <string name="category_transport">Közlekedés</string>
+    <string name="category_entertainment">Szórakozás</string>
+    <string name="category_other">Egyéb</string>
+</resources>
