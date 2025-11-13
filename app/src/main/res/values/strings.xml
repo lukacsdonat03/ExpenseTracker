@@ -9,4 +9,8 @@
     <string name="category_transport">Transport</string>
     <string name="category_entertainment">Entertainment</string>
     <string name="category_other">Other</string>
+    <string name="no_expenses_yet">There isn\'t any expense yet</string>
+    <string name="home">Home</string>
+    <string name="statistics">Statictics\n</string>
+    <string name="last_expenses">Last expenses</string>
 </resources>

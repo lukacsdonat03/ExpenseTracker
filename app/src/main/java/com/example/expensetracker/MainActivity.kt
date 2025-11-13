@@ -1,5 +1,6 @@
 package com.example.expensetracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -36,6 +37,10 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        binding.navExpenses.setOnClickListener {
+            startActivity(Intent(this, LastExpensesActivity::class.java))
         }
     }
 }
