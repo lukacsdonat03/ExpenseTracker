@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LastExpensesActivity::class.java))
         }
 
+        binding.navStatictics.setOnClickListener {
+            startActivity(Intent(this, ChartActivity::class.java))
+        }
+
         //Expense hozzáadása
         binding.buttonAddExpense.setOnClickListener {
 

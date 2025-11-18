@@ -25,6 +25,10 @@ class LastExpensesActivity: AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
+        binding.navStatictics.setOnClickListener {
+            startActivity(Intent(this, ChartActivity::class.java))
+        }
+
         loadExpenses()
     }
 

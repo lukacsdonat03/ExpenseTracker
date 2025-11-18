@@ -16,4 +16,5 @@
     <string name="empty_amount">Expense amount cannot be empty!</string>
     <string name="added_successfuly">Successfuly saved</string>
     <string name="expense_deleted">Expense deleted</string>
+    <string name="chart_title">Expense Statictics</string>
 </resources>

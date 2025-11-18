@@ -17,4 +17,5 @@
     <string name="empty_amount">Az összeg nem lehet üres!</string>
     <string name="added_successfuly">Sikeres mentés</string>
     <string name="expense_deleted">Kiadás törölve</string>
+    <string name="chart_title">Kiadás Statisztika</string>
 </resources>
