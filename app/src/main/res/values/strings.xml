@@ -13,4 +13,6 @@
     <string name="home">Home</string>
     <string name="statistics">Statictics\n</string>
     <string name="last_expenses">Last expenses</string>
+    <string name="empty_amount">Expense amount cannot be empty!</string>
+    <string name="added_successfuly">Successfuly saved</string>
 </resources>

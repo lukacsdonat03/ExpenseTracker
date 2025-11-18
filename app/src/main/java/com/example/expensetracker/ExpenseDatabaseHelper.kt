@@ -1,5 +1,6 @@
 package com.example.expensetracker
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -22,4 +23,15 @@ class ExpenseDatabaseHelper(context: Context): SQLiteOpenHelper(context, "EXPENS
         db?.execSQL("DROP TABLE IF EXISTS EXPENSES")
         onCreate(db)
     }
+
+    fun insertExpense(categoryCode: Int, price: Float): Long {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("CATEGORY", categoryCode)
+            put("PRICE", price)
+            // CREATED_AT automatikusan kitöltődik a DEFAULT CURRENT_TIMESTAMP miatt
+        }
+        return db.insert("EXPENSES", null, values)
+    }
+
 }

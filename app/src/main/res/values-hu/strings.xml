@@ -14,4 +14,6 @@
     <string name="home">Főoldal</string>
     <string name="statistics">Statisztika</string>
     <string name="last_expenses">Legutóbbi kiadások</string>
+    <string name="empty_amount">Az összeg nem lehet üres!</string>
+    <string name="added_successfuly">Sikeres mentés</string>
 </resources>
