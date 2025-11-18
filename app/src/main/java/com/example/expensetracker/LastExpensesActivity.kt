@@ -1,6 +1,5 @@
 package com.example.expensetracker
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -73,7 +72,7 @@ class LastExpensesActivity: AppCompatActivity() {
             if (expenseIds.isNotEmpty() && position < expenseIds.size) {
                 val expenseId = expenseIds[position]
                 db.delete("EXPENSES", "ID=?", arrayOf(expenseId.toString()))
-                Toast.makeText(this, "Expense deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.expense_deleted, Toast.LENGTH_SHORT).show()
                 loadExpenses() // újratöltés
             }
             true

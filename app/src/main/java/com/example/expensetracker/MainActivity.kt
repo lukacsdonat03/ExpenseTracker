@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity() {
 
             val price = priceText.toDouble()
 
+            if(price == 0.0){
+                Toast.makeText(applicationContext, R.string.empty_amount,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             //Category Id kinyíerése
             val selectedIndex = binding.spinnerCategory.selectedItemPosition
             val category = ExpenseCategory.values()[selectedIndex]
