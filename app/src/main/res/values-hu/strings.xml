@@ -18,4 +18,6 @@
     <string name="added_successfuly">Sikeres mentés</string>
     <string name="expense_deleted">Kiadás törölve</string>
     <string name="chart_title">Kiadás Statisztika</string>
+    <string name="expenses_by_categories">Kiadások kategóriák szerint</string>
+    <string name="chart_amount">Összeg (Ft)</string>
 </resources>

@@ -5,9 +5,11 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.expensetracker.databinding.ActivityStaticticsBinding
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 class ChartActivity : AppCompatActivity() {
 
@@ -29,44 +31,76 @@ class ChartActivity : AppCompatActivity() {
             startActivity(Intent(this, LastExpensesActivity::class.java))
         }
 
-        setupChart()
+        setupBarChart()
     }
 
-    private fun setupChart() {
+    private fun setupBarChart() {
         val db = dbHelper.readableDatabase
+
         val cursor = db.rawQuery(
-            "SELECT PRICE, CREATED_AT FROM EXPENSES ORDER BY CREATED_AT ASC",
+            "SELECT CATEGORY, SUM(PRICE) as TOTAL FROM EXPENSES GROUP BY CATEGORY",
             null
         )
 
-        val entries = mutableListOf<Entry>()
-        var index = 0f
+        val entries = mutableListOf<BarEntry>()
+        val labels = mutableListOf<String>()
+
+        var index = 0
 
         if (cursor.moveToFirst()) {
             do {
-                val price = cursor.getFloat(cursor.getColumnIndexOrThrow("PRICE"))
-                entries.add(Entry(index, price))
-                index += 1f
+                val categoryCode = cursor.getInt(cursor.getColumnIndexOrThrow("CATEGORY"))
+                val total = cursor.getFloat(cursor.getColumnIndexOrThrow("TOTAL"))
+
+                // Az X érték -> label
+                entries.add(BarEntry(index.toFloat(), total))
+
+                val category = ExpenseCategory.fromCode(categoryCode)
+                labels.add(category.getLocalizedName(this))
+
+                index++
             } while (cursor.moveToNext())
         }
         cursor.close()
 
-        val dataSet = LineDataSet(entries, "Expenses")
-        dataSet.color = Color.WHITE
+        val dataSet = BarDataSet(entries, getString(R.string.expenses_by_categories))   //Valamiért kell a getString
+        dataSet.color = Color.GREEN
         dataSet.valueTextColor = Color.WHITE
-        dataSet.lineWidth = 2f
-        dataSet.circleRadius = 5f
-        dataSet.setCircleColor(Color.WHITE)
-        dataSet.setDrawFilled(true)
-        dataSet.fillColor = Color.GREEN
-        dataSet.fillAlpha = 50
+        dataSet.valueTextSize = 14f
 
-        val lineData = LineData(dataSet)
-        binding.lineChart.data = lineData
-        binding.lineChart.axisLeft.textColor = Color.WHITE
-        binding.lineChart.axisRight.isEnabled = false
-        binding.lineChart.xAxis.textColor = Color.WHITE
-        binding.lineChart.description.isEnabled = false
-        binding.lineChart.invalidate() // Frissítés
+        val barData = BarData(dataSet)
+        barData.barWidth = 0.6f
+
+        binding.barChart.data = barData
+        binding.barChart.setFitBars(true)
+
+        // X tengely
+        val xAxis = binding.barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.granularity = 1f
+        xAxis.labelCount = labels.size
+        xAxis.textColor = Color.WHITE
+        xAxis.setDrawGridLines(false)
+        xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+        xAxis.labelRotationAngle = -20f
+
+        // Y tengely (Ft)
+        val leftAxis = binding.barChart.axisLeft
+        leftAxis.textColor = Color.WHITE
+
+        // Y tengely magyarázat
+        binding.barChart.description.isEnabled = true
+        binding.barChart.description.text = getString(R.string.chart_amount)
+        binding.barChart.description.textColor = Color.WHITE
+        binding.barChart.description.textSize = 12f
+        binding.barChart.description.setPosition(200f, 50f)
+
+        binding.barChart.axisRight.isEnabled = false
+
+        // Jelmagyarázat
+        binding.barChart.legend.textColor = Color.WHITE
+        binding.barChart.legend.textSize = 14f
+
+        binding.barChart.invalidate()
     }
 }
