@@ -10,7 +10,7 @@
         android:id="@+id/text_view_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last expenses"
+        android:text="@string/last_expenses_title"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"

@@ -32,6 +32,7 @@ class ChartActivity : AppCompatActivity() {
         }
 
         setupBarChart()
+        setupMonthlyBarChart()
     }
 
     private fun setupBarChart() {
@@ -103,4 +104,69 @@ class ChartActivity : AppCompatActivity() {
 
         binding.barChart.invalidate()
     }
+
+    private fun setupMonthlyBarChart() {
+        val db = dbHelper.readableDatabase
+
+        val cursor = db.rawQuery(
+            """
+        SELECT CATEGORY, SUM(PRICE) as TOTAL 
+        FROM EXPENSES 
+        WHERE strftime('%Y-%m', CREATED_AT) = strftime('%Y-%m', 'now')
+        GROUP BY CATEGORY
+        """.trimIndent(),
+            null
+        )
+
+        val entries = mutableListOf<BarEntry>()
+        val labels = mutableListOf<String>()
+        var index = 0
+
+        if (cursor.moveToFirst()) {
+            do {
+                val categoryCode =
+                    cursor.getInt(cursor.getColumnIndexOrThrow("CATEGORY"))
+                val total =
+                    cursor.getFloat(cursor.getColumnIndexOrThrow("TOTAL"))
+
+                entries.add(BarEntry(index.toFloat(), total))
+
+                val category = ExpenseCategory.fromCode(categoryCode)
+                labels.add(category.getLocalizedName(this))
+
+                index++
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+
+        val dataSet = BarDataSet(entries, getString(R.string.expenses_by_categories))
+        dataSet.color = Color.CYAN
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.valueTextSize = 14f
+
+        val barData = BarData(dataSet)
+        barData.barWidth = 0.6f
+
+        binding.barChartMonthly.data = barData
+        binding.barChartMonthly.setFitBars(true)
+
+        val xAxis = binding.barChartMonthly.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+        xAxis.textColor = Color.WHITE
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = -20f
+
+        val leftAxis = binding.barChartMonthly.axisLeft
+        leftAxis.textColor = Color.WHITE
+
+        binding.barChartMonthly.axisRight.isEnabled = false
+        binding.barChartMonthly.legend.textColor = Color.WHITE
+
+        binding.barChartMonthly.description.text = getString(R.string.this_month)
+        binding.barChartMonthly.description.textColor = Color.WHITE
+
+        binding.barChartMonthly.invalidate()
+    }
+
 }

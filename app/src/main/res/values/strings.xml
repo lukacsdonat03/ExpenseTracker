@@ -19,4 +19,6 @@
     <string name="chart_title">Expense Statictics</string>
     <string name="expenses_by_categories">Expenses by categories</string>
     <string name="chart_amount">Amount (Ft)</string>
+    <string name="this_month">This month</string>
+    <string name="last_expenses_title">Last expenses</string>
 </resources>

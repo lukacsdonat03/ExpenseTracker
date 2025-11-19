@@ -20,4 +20,6 @@
     <string name="chart_title">Kiadás Statisztika</string>
     <string name="expenses_by_categories">Kiadások kategóriák szerint</string>
     <string name="chart_amount">Összeg (Ft)</string>
+    <string name="this_month">Ebben a hónapban</string>
+    <string name="last_expenses_title">Legutúbbi kiadások</string>
 </resources>
